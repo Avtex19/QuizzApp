@@ -1,0 +1,106 @@
+{% extends 'main.html' %} {% block content %}
+
+<div class="container">
+  <form method="post" action="" class="questions-form">
+    {% csrf_token %}
+    <div class="header-bar">
+      <h1>Quizz App</h1>
+    </div>
+
+    <div class="form-middle-part">
+      <div id="timer">
+        Time: 30 secs
+      </div>
+
+      <div class="question-answers">
+        <div class="question">
+
+          <h3>{{question.question }}</h3>
+        </div>
+
+        <div class="answers-wrapper">
+          <div class="answers">
+            <div>
+              <input
+                type="radio"
+                id="option1-{{ question.pk }}"
+                name="question-{{ question.pk }}"
+                value="{{ question.option1 }}"
+              />
+              <label for="option1-{{ question.pk }}"
+                >{{ question.option1 }}</label
+              >
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="option2-{{ question.pk }}"
+                name="question-{{ question.pk }}"
+                value="{{ question.option2 }}"
+              />
+              <label for="option2-{{ question.pk }}"
+                >{{ question.option2 }}</label
+              >
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="option3-{{ question.pk }}"
+                name="question-{{ question.pk }}"
+                value="{{ question.option3 }}"
+              />
+              <label for="option3-{{ question.pk }}"
+                >{{ question.option3 }}</label
+              >
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="option4-{{ question.pk }}"
+                name="question-{{ question.pk }}"
+                value="{{ question.option4 }}"
+              />
+              <label for="option4-{{ question.pk }}"
+                >{{ question.option4 }}</label
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+  {% block script %}
+  <script>
+  function startTimer(duration, display) {
+    var timer = duration;
+    const myInterval = setInterval(function () {
+      var seconds = timer % 60;
+      display.innerText = `Time: ${seconds} secs`;
+      timer--;
+      
+      
+      setTimeout(() => {
+      if (timer < 0) {
+        timer = duration;
+        var current_question_id = {{ question.pk }};
+        var next_question_id = current_question_id + 1;
+        window.location.href = `{% url 'question' category_id=question.category_id %}?next_question=True&question_id=${next_question_id}`;
+        // Redirect to the next question
+      }
+    }, 1000);
+
+    return () => clearInterval(myInterval);
+    }, 1000);
+  }
+
+  window.onload = function () {
+    var display = document.querySelector("#timer");
+    startTimer(29, display); // Set the duration of the timer here
+  };
+</script>
+{% endblock script %}
+
+</div>
+
+{% endblock %}

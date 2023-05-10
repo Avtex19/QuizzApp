@@ -1,0 +1,30 @@
+{% extends 'main.html' %} {% block content %}
+
+<div class="container">
+  <div class="categories-and-btn">
+   
+      <form method="post" action="">
+
+        <div class="header-bar">
+            <h1>Quizz App</h1>
+          </div>
+
+
+        {% csrf_token %}
+        <div>
+        <label for="category">Category:</label>
+        <select name="category" id="category" onfocus='this.size=5' onblur='this.size=1'>
+          {% for category in categories %}
+          <option value="{{ category.id }}">{{ category.name }}</option>
+          {% endfor %}
+        </select>
+        
+    </div>
+        <button class="submit-answer" >Submit</button>
+    </form>
+    
+   
+  </div>
+  
+</div>
+{% endblock %}

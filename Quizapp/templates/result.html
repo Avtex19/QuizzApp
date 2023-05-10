@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+ 
+{% block content %}
+ <div class="card-body">
+    <div class='results-container'>
+        <h3 class="card-title">Score: {{score}}</h3>
+        <p class="card-text">Correct answers: {{correct}}</p>
+        <p class="card-text">Incorrect answers: {{wrong}}</p>
+        <p class="card-text">Total questions: {{total}}</p>
+    </div>
+    
+        <form class="play-again-form" action="{% url 'play_again' %}">
+            <button class="submit-answer" type="submit">Play Again</button>
+        </form>
+    </div>
+ 
+{% endblock %}
